@@ -1,7 +1,7 @@
 package com.hzx.blog.controller.admin;
 
 import com.hzx.blog.model.Type;
-import com.hzx.blog.service.TypeSerivce;
+import com.hzx.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +24,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TagController {
 
     @Autowired
-    private TypeSerivce typeSerivce;
+    private TypeService typeService;
 
     @RequestMapping("/types")
     public String types(@PageableDefault(size = 3,sort = "id",direction = Sort.Direction.DESC) Pageable pageable, Model model){
 
-        Page<Type> page = typeSerivce.getPage(pageable);
+        Page<Type> page = typeService.getPage(pageable);
 
         model.addAttribute("page",page);
         return "admin/types";
@@ -45,7 +45,7 @@ public class TagController {
     @PostMapping("/saveType")
     public String saveType(Type type, RedirectAttributes redirectAttributes){
 
-        Type type2 = typeSerivce.saveType(type);
+        Type type2 = typeService.saveType(type);
 
         if(type2 == null){
             redirectAttributes.addFlashAttribute("message",type.getName()+"标签已经存在，请勿重复添加");
@@ -70,7 +70,7 @@ public class TagController {
     @PostMapping("/editType")
     public String editType(Type type, RedirectAttributes redirectAttributes){
 
-        Type type2 = typeSerivce.editType(type);
+        Type type2 = typeService.editType(type);
 
         redirectAttributes.addFlashAttribute("message","将"+type.getName()+"修改成了"+type2.getName());
 
@@ -81,7 +81,7 @@ public class TagController {
     @RequestMapping("/deletType")
     public String deletType(Type type, RedirectAttributes redirectAttributes){
 
-        typeSerivce.deleteType(type);
+        typeService.deleteType(type);
 
         redirectAttributes.addFlashAttribute("message","删除了" + type.getName());
 

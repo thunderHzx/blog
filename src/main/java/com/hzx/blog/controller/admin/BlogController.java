@@ -1,12 +1,9 @@
 package com.hzx.blog.controller.admin;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.hzx.blog.model.*;
 import com.hzx.blog.service.BlogService;
-import com.hzx.blog.service.TagSerivce;
-import com.hzx.blog.service.TypeSerivce;
+import com.hzx.blog.service.TagService;
+import com.hzx.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,13 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * hzx
@@ -34,10 +28,10 @@ import java.util.Map;
 public class BlogController {
 
     @Autowired
-    private TypeSerivce typeSerivce;
+    private TypeService typeService;
 
     @Autowired
-    private TagSerivce tagSerivce;
+    private TagService tagService;
 
     @Autowired
     private BlogService blogService;
@@ -46,7 +40,7 @@ public class BlogController {
     public String blogs(Model model,
                         @PageableDefault(size = 3, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, BlogQuery blog) {
 
-        List<Type> types = typeSerivce.getAll();
+        List<Type> types = typeService.getAll();
 
         Page<Blog> blogs = blogService.listBlog(pageable, blog);
 
@@ -76,9 +70,9 @@ public class BlogController {
     @RequestMapping("/blogs/input")
     public String input(Model model){
 
-        List<Type> types = typeSerivce.getAll();
+        List<Type> types = typeService.getAll();
 
-        List<Tag> tags = tagSerivce.getAll();
+        List<Tag> tags = tagService.getAll();
         model.addAttribute("types", types);
         model.addAttribute("tags", tags);
 
@@ -92,9 +86,9 @@ public class BlogController {
 
         blog.setUser(user);
 
-        blog.setType(typeSerivce.getTypeById(blog.getType().getId()));
+        blog.setType(typeService.getTypeById(blog.getType().getId()));
 
-        blog.setTags(tagSerivce.listTag(blog.getTagIds()));
+        blog.setTags(tagService.listTag(blog.getTagIds()));
 
         Blog saveblog = blogService.saveBlog(blog);
 
@@ -113,9 +107,9 @@ public class BlogController {
     @RequestMapping("/blogs/edit")
     public String toEdit(Model model,Long id){
 
-        List<Type> types = typeSerivce.getAll();
+        List<Type> types = typeService.getAll();
 
-        List<Tag> tags = tagSerivce.getAll();
+        List<Tag> tags = tagService.getAll();
         model.addAttribute("types", types);
         model.addAttribute("tags", tags);
 
@@ -145,9 +139,9 @@ public class BlogController {
     public String edit(Blog blog, HttpSession session){
 
 
-        blog.setType(typeSerivce.getTypeById(blog.getType().getId()));
+        blog.setType(typeService.getTypeById(blog.getType().getId()));
 
-        blog.setTags(tagSerivce.listTag(blog.getTagIds()));
+        blog.setTags(tagService.listTag(blog.getTagIds()));
 
         blog.setUpdateTime(new Date());
 

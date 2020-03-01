@@ -25,6 +25,8 @@ public class Blog {
 
     private String firstPicture;
 
+    private String description;
+
     private Long flag;
 
     private long views;
@@ -59,6 +61,15 @@ public class Blog {
 
     @OneToMany(mappedBy = "blog")
     private List<Comment> comments = new ArrayList<>();
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getTagIds() {
         return tagIds;

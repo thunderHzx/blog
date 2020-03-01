@@ -3,9 +3,9 @@ spring:
     mode: HTML
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://122.51.91.168:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: root
+    password: hou123
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,3 +17,5 @@ logging:
     root: info
     com.hzx.blog: debug
   file: log/imcoding.log
+server:
+  port: 9001

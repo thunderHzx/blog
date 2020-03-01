@@ -11,27 +11,8 @@
 <body>
 
   <!--导航-->
-  <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
-    <div class="ui container">
-      <div class="ui inverted secondary stackable menu">
-        <h2 class="ui teal header item">管理后台</h2>
-        <a href="#" class="active m-item item m-mobile-hide"><i class="mini home icon"></i>博客</a>
-        <a href="#" class=" m-item item m-mobile-hide"><i class="mini idea icon"></i>分类</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>标签</a>
-        <div class="right m-item m-mobile-hide menu">
-          <div class="ui dropdown  item">
-            <div class="text">
-              <img class="ui avatar image" src="https://unsplash.it/100/100?image=1005">
-              李仁密
-            </div>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <a href="#" class="item">注销</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
       <i class="sidebar icon"></i>
     </a>
@@ -39,8 +20,8 @@
   <div class="ui attached pointing menu">
     <div class="ui container">
       <div class="right menu">
-        <a href="#" class="teal active item">发布</a>
-        <a href="#" class="item">列表</a>
+        <a href="#" th:href="@{/admin/blogs/input}" class=" teal active item">发布</a>
+        <a href="#" th:href="@{/admin/blogs}" class="  item">列表</a>
       </div>
     </div>
   </div>
@@ -107,6 +88,10 @@
             <input type="text" name="firstPicture" placeholder="首图引用地址">
           </div>
 
+        </div>
+
+        <div class="required field">
+          <textarea name="description"  placeholder="博客描述..." maxlength="200"></textarea>
         </div>
 
         <div class="inline fields">
@@ -224,6 +209,13 @@
               rules: [{
                   type : 'empty',
                   prompt: '内容：请输入博客内容'
+              }]
+          },
+          desc : {
+              identifier: 'description',
+              rules: [{
+                  type : 'empty',
+                  prompt: '描述内容：请输入博客描述内容'
               }]
           },
           type : {
