@@ -55,7 +55,6 @@ public class BlogController {
     public  String search(Model model,
                   @PageableDefault(size = 3, sort = "updateTime", direction = Sort.Direction.DESC) Pageable pageable, BlogQuery blog) {
 
-
         Page<Blog> blogs = blogService.listBlog(pageable, blog);
 
         model.addAttribute("blogs",blogs);
